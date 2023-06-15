@@ -1,0 +1,43 @@
+syntax = "proto3";
+package user;
+option go_package = "github.com/Zhoangp/Cart-Service/pb/user";
+import "pb/error/error.proto";
+
+service UserService {
+  rpc GetInstructor(GetInstructorInformationRequest) returns (GetInstructorInformationResponse);
+}
+
+message Picture {
+  uint32 id = 1;
+  string url = 2;
+  string width = 3;
+  string height = 4;
+}
+
+
+message GetInstructorInformationRequest {
+  string id = 1;
+  string key = 2;
+}
+
+message Instructor {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string email = 4;
+  string website = 5;
+  string  linkedin = 6;
+  string youtube = 7;
+  string bio = 8;
+  string userId =  9;
+  string NumStudents = 10;
+  string NumReviews = 11;
+  string TotalCourses = 12;
+  Picture avt = 13;
+  error.ErrorResponse error = 14;
+}
+message GetInstructorInformationResponse {
+  Instructor information = 2;
+  error.ErrorResponse error = 3;
+}
+

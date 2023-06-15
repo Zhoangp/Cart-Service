@@ -1,10 +1,15 @@
 syntax = "proto3";
 package cart;
-option go_package = "./pb";
+option go_package = "github.com/Zhoangp/Cart-Service/pb";
+import "pb/error/error.proto";
 
 service CartService {
   rpc GetCart(GetCartRequest) returns(GetCartResponse);
-  rpc AddItem(AddItemRequest) returns(AddItemResponse);
+  rpc AddItem(CartItemRequest) returns(CartItemResponse);
+  rpc RemoveItem(CartItemRequest) returns(CartItemResponse);
+  rpc ResetCart(ResetCartRequest) returns(ResetCartResponse);
+  rpc CreateCart(CreateCartRequest) returns(CreateCartResponse);
+
 }
 
 message Image {
@@ -24,6 +29,7 @@ message Course {
   string status = 10 ;
   float rating = 11 ;
   Image thumbnail = 12;
+  string instructorId = 14;
 }
 message Cart {
   string id = 1;
@@ -36,16 +42,30 @@ message GetCartRequest {
 }
 message GetCartResponse {
   Cart cart = 1;
-  ErrorResponse error = 2;
+  string totalCourse = 2;
+  error.ErrorResponse error = 3;
 }
-message AddItemRequest {
+message CartItemRequest {
   string cartId = 1;
   string courseId = 2;
 }
-message AddItemResponse {
-  ErrorResponse error = 1;
+message CartItemResponse {
+  error.ErrorResponse error = 1;
 }
+
 message ErrorResponse {
   int64 code = 1;
   string message = 2;
+}
+message ResetCartRequest {
+  string cartId = 1;
+}
+message ResetCartResponse {
+  error.ErrorResponse error = 1;
+}
+message CreateCartRequest {
+  string userId = 1;
+}
+message CreateCartResponse {
+  error.ErrorResponse error = 1;
 }
